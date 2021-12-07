@@ -1,18 +1,18 @@
 const initialState = {
-    runs: []
+    runs: ["hi"]
 }
 
-export const getRunData = () => (dispatch, getState) => {
-    fetch("http://localhost:5000/runs").then(response =>
+export async function getRunData(dispatch, getState) {
+    await fetch("http://localhost:5000/runs").then(response =>
       response.json().then(responseData => {
-        rootReducer.dispatch({ type:"GET_RUNS", payload: responseData})
+        dispatch({ type:"GET_RUNS", payload: responseData})
       })
     )
 }
 
 function rootReducer(state = initialState, action) {
-    if (action.type === "PLACEHOLDER") {
-        return {runs: state.runs}
+    if (action.type === "GET_RUNS") {
+        return {runs: action.payload}
     } else {
         return state
     }
